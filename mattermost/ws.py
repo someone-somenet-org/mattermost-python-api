@@ -60,9 +60,10 @@ class MMws:
 
     async def _websocket_run(self):
         logger.info("Starting websocket client.")
-        async with websockets.connect(self.ws_url) as websocket:
-            await websocket.send(json.dumps({"seq": 1, "action":"authentication_challenge", "data":{"token":self.api._bearer}}))
-            logger.info("websocket client connected")
+        async with websockets.connect(self.ws_url, ping_interval=None, extra_headers={"Authorization": "Bearer "+self.api._bearer}) as websocket:
+            #await websocket.send(json.dumps({"seq": 1, "action":"authentication_challenge", "data":{"token":self.api._bearer}}))
+            logger.info(json.loads(await websocket.recv()))
+            logger.info("websocket client connected. looping...")
 
             while self.loop:
                 data = json.loads(await websocket.recv())
