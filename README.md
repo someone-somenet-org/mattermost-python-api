@@ -179,11 +179,11 @@ Ordered by https://api.mattermost.com/
   + *``set_team_icon() #NOT_IMPLEMENTED``*
   + *``remove_team_icon() #NOT_IMPLEMENTED``*
   + *``update_team_members_roles() #NOT_IMPLEMENTED``*
-  + **``update_team_members_scheme_roles (team_id, user_id, data, **kwargs)``**
+  + **``update_team_members_scheme_roles (team_id, user_id, props, **kwargs)``**
   + *``get_team_unreads_for_user() #NOT_IMPLEMENTED``*
   + *``get_team_unreads() #NOT_IMPLEMENTED``*
   + *``invite_users_to_team_by_email() #NOT_IMPLEMENTED``*
-  + *``invite_guests_to_team_by_email() #NOT_IMPLEMENTED``*
+  + **``invite_guests_to_team_by_email (team_id, guest_email, channels, message, **kwargs)``**
   + *``invalidate_invites_to_team_by_email() #NOT_IMPLEMENTED``*
   + *``import_team() #NOT_IMPLEMENTED``*
   + *``get_team_invite_info() #NOT_IMPLEMENTED``*
@@ -204,20 +204,20 @@ Ordered by https://api.mattermost.com/
   + **``patch_channel (channel_id, props, **kwargs)``**
   + **``get_channel_posts_pinned (channel_id, **kwargs)``**
   + **``search_channel (team_id, term, **kwargs)``**
-  + **``get_channel_by_name (team_id, channel_name, **kwargs)``**
+  + **``get_channel_by_name (team_id, channel_name, include_deleted=None, **kwargs)``**
   + **``get_channel_members (channel_id, **kwargs)``**
-  + **``get_channel_member (channel_id, user_id, **kwargs)``**
   + **``add_user_to_channel (channel_id, user_id, **kwargs)``**
+  + **``get_channel_member (channel_id, user_id, **kwargs)``**
   + **``remove_user_from_channel (channel_id, user_id, **kwargs)``**
-  + **``get_channel_members_for_user (user_id, team_id, **kwargs)``**
-  + **``get_channels_for_user (user_id, team_id, **kwargs)``**
   + **``update_channel_members_scheme_roles (channel_id, user_id, props, **kwargs)``**
+  + **``get_channel_memberships_for_user (user_id, team_id, **kwargs)``**
+  + **``get_channels_for_user (user_id, team_id, **kwargs)``**
 + **POSTS**
-  + **``create_post (channel_id, message, props={"from_webhook":"true"}, filepaths=[], root_id=None, **kwargs)``**
+  + **``create_post (channel_id, message, props=None, filepaths=None, root_id=None, **kwargs)``**
   + **``create_ephemeral_post (channel_id, message, user_id, **kwargs)``**
   + **``get_post (post_id, **kwargs)``**
   + **``delete_post (post_id, **kwargs)``**
-  + **``patch_post (post_id, message, props, **kwargs)``**
+  + **``patch_post (post_id, message=None, is_pinned=None, props=None, **kwargs)``**
   + **``get_posts_for_channel (channel_id, **kwargs)``**
 + **FILES**
   + **``upload_file (channel_id, filepath, **kwargs)``**
@@ -228,12 +228,12 @@ Ordered by https://api.mattermost.com/
 + **REACTIONS**
   + **``create_reaction (user_id, post_id, emoji_name, **kwargs)``**
 + **WEBHOOKS**
-  + **``create_outgoing_hook (team_id, channel_id, description="", display_name="", trigger_words=[], trigger_when=0, callback_urls=[], **kwargs)``**
-  + **``list_outgoing_hooks (team_id, channel_id, **kwargs)``**
+  + **``create_outgoing_hook (team_id, display_name, trigger_words, callback_urls, channel_id=None, description=None, trigger_when=0, **kwargs)``**
+  + **``list_outgoing_hooks (team_id, channel_id=None, **kwargs)``**
   + **``delete_outgoing_hook (hook_id, **kwargs)``**
 + **COMMANDS**
-  + **``create_slash_command (team_id, command, url, **kwargs)``**
-  + **``list_custom_slash_commands_per_team (team_id, **kwargs)``**
+  + **``create_slash_command (team_id, trigger, url, **kwargs)``**
+  + **``list_custom_slash_commands_for_team (team_id, **kwargs)``**
   + **``update_slash_command (data, **kwargs)``**
   + **``delete_slash_command (command_id, **kwargs)``**
 + **OPENGRAPH** #NOT_IMPLEMENTED
@@ -252,6 +252,6 @@ Ordered by https://api.mattermost.com/
 + **PLUGINS** #NOT_IMPLEMENTED
 + **ROLES** #NOT_IMPLEMENTED
 + **SCHEMES** #NOT_IMPLEMENTED
-+ **INTEGRATION ACTIONS**
++ **INTEGRATION_ACTIONS**
   + **``open_dialog (trigger_id, response_url, dialog, **kwargs)``**
-+ **TERMS OF SERVICE** #NOT_IMPLEMENTED
++ **TERMS_OF_SERVICE** #NOT_IMPLEMENTED
