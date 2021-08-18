@@ -684,7 +684,33 @@ class MMApi:
     #def get_team_unreads_for_user() #NOT_IMPLEMENTED
     #def get_team_unreads() #NOT_IMPLEMENTED
     #def invite_users_to_team_by_email() #NOT_IMPLEMENTED
-    #def invite_guests_to_team_by_email() #NOT_IMPLEMENTED
+
+
+
+    def invite_guests_to_team_by_email(self, team_id, guest_email, channels, message, **kwargs):
+        """
+        Invite guests to existing team channels usign the user's email.
+        The number of emails that can be sent is rate limited to 20 per hour with a burst of 20 emails. If the rate limit exceeds, the error message contains details on when to retry and when the timer will be reset.
+
+        Args:
+            team_id (string): obvious
+            guest_email (strings): whom to invite.
+            channels (list of channel_ids): into which channels.
+            message (string, optional): optional message
+
+        Returns:
+            dict: status.
+
+        Raises:
+            ApiException: Passed on from lower layers.
+        """
+        return self._post("/v4/teams/"+team_id+"/invite-guests/email", data={
+            "emails": [guest_email],
+            "channels": channels,
+            **({"message": message} if message else {}),
+        }, **kwargs)
+
+
     #def invalidate_invites_to_team_by_email() #NOT_IMPLEMENTED
     #def import_team() #NOT_IMPLEMENTED
     #def get_team_invite_info() #NOT_IMPLEMENTED
