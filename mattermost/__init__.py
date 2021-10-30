@@ -1163,7 +1163,7 @@ class MMApi:
 
 
 
-    def patch_post(self, post_id, message=None, is_pinned=None, props=None, **kwargs):
+    def patch_post(self, post_id, message=None, is_pinned=None, file_ids=None, props=None, **kwargs):
         """
         Partially update a post by providing only the fields you want to update. Omitted fields will not be updated. The fields that can be updated are defined in the request body, all other provided fields will be ignored.
 
@@ -1171,6 +1171,7 @@ class MMApi:
             post_id (string): The post ID to patch.
             message (string, optional): see MM-API doc.
             is_pinned (bool, optional): see MM-API doc.
+            file_ids (list of file_ids, optional): see MM-API doc.
             props (dict, optional): see MM-API doc.
 
         Returns:
@@ -1182,6 +1183,7 @@ class MMApi:
         return self._put("/v4/posts/"+post_id+"/patch", data={
             **({"message": message} if message else {}),
             **({"is_pinned": is_pinned} if is_pinned else {}),
+            **({"file_ids": file_ids} if file_ids else {}),
             **({"props": props} if props else {}),
         }, **kwargs)
 
