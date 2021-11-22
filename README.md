@@ -1,4 +1,6 @@
 # [Mattermost API](https://api.mattermost.com/) bindings
+(Read on github: https://github.com/someone-somenet-org/mattermost-python-api)
+
 In productive use on a 6k+ users E10 instance at https://mattermost.fsinf.at
 + Used to manage channels, users and everything.
 + Some api-endpoints are #UNTESTED.
