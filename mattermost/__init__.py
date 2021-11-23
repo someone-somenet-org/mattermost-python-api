@@ -1162,6 +1162,30 @@ class MMApi:
         return self._delete("/v4/posts/"+post_id, **kwargs)
 
 
+    def update_post(self, post_id, message, is_pinned, file_ids, props, **kwargs):
+        """
+        Update a post. Only the fields listed below are updatable, omitted fields will be treated as blank.
+
+        Args:
+            post_id (string): The post ID to patch.
+            message (string): see MM-API doc.
+            is_pinned (bool): see MM-API doc.
+            file_ids (list of file_ids): see MM-API doc.
+            props (dict): see MM-API doc.
+
+        Returns:
+            dict: Post.
+
+        Raises:
+            ApiException: Passed on from lower layers.
+        """
+        return self._put("/v4/posts/"+post_id, data={
+            "message": message,
+            "is_pinned": is_pinned,
+            "file_ids": file_ids,
+            "props": props,
+        }, **kwargs)
+
 
     def patch_post(self, post_id, message=None, is_pinned=None, file_ids=None, props=None, **kwargs):
         """
