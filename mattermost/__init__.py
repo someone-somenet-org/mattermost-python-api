@@ -1142,7 +1142,10 @@ class MMApi:
         Raises:
             ApiException: Passed on from lower layers.
         """
-        return self._get("/v4/posts/"+post_id, **kwargs)
+        post = self._get("/v4/posts/"+post_id, **kwargs)
+        if "has_reactions" not in post:
+            post["has_reactions"] = False
+        return post
 
 
 
@@ -1162,7 +1165,7 @@ class MMApi:
         return self._delete("/v4/posts/"+post_id, **kwargs)
 
 
-    def update_post(self, post_id, message, is_pinned, file_ids, props, **kwargs):
+    def update_post(self, post_id, message, is_pinned, has_reactions, props, **kwargs):
         """
         Update a post. Only the fields listed below are updatable, omitted fields will be treated as blank.
 
@@ -1170,7 +1173,7 @@ class MMApi:
             post_id (string): The post ID to patch.
             message (string): see MM-API doc.
             is_pinned (bool): see MM-API doc.
-            file_ids (list of file_ids): see MM-API doc.
+            has_reactions (list of has_reactions): see MM-API doc.
             props (dict): see MM-API doc.
 
         Returns:
@@ -1180,14 +1183,15 @@ class MMApi:
             ApiException: Passed on from lower layers.
         """
         return self._put("/v4/posts/"+post_id, data={
+            "id": post_id,
             "message": message,
             "is_pinned": is_pinned,
-            "file_ids": file_ids,
+            "has_reactions": has_reactions,
             "props": props,
         }, **kwargs)
 
 
-    def patch_post(self, post_id, message=None, is_pinned=None, file_ids=None, props=None, **kwargs):
+    def patch_post(self, post_id, message=None, is_pinned=None, file_ids=None, has_reactions=None, props=None, **kwargs):
         """
         Partially update a post by providing only the fields you want to update. Omitted fields will not be updated. The fields that can be updated are defined in the request body, all other provided fields will be ignored.
 
@@ -1196,6 +1200,7 @@ class MMApi:
             message (string, optional): see MM-API doc.
             is_pinned (bool, optional): see MM-API doc.
             file_ids (list of file_ids, optional): see MM-API doc.
+            has_reactions (list of has_reactions, optional): see MM-API doc.
             props (dict, optional): see MM-API doc.
 
         Returns:
@@ -1208,6 +1213,7 @@ class MMApi:
             **({"message": message} if message else {}),
             **({"is_pinned": is_pinned} if is_pinned else {}),
             **({"file_ids": file_ids} if file_ids else {}),
+            **({"has_reactions": has_reactions} if has_reactions else {}),
             **({"props": props} if props else {}),
         }, **kwargs)
 

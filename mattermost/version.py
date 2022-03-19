@@ -6,4 +6,4 @@ Someone's Mattermost API v4 bindings.
 """
 
 # Set this package's version.
-__version__ = "6.1.0"
+__version__ = "6.5.0"

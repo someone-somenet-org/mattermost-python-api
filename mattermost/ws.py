@@ -42,8 +42,8 @@ class MMws:
             return
 
         thread = threading.Timer(3.0, self._open_websocket)
+        thread.setName("MMws")
         thread.setDaemon(True)
-        thread.setName("websocket")
         thread.start()
 
 
