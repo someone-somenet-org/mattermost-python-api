@@ -205,7 +205,20 @@ class MMApi:
 #+ **USERS**
 
 
-    #def create_user() #NOT_IMPLEMENTED
+    def create_user(self, props=None, **kwargs):
+        """
+        Create user.
+
+        Args:
+            props (dict, optional): fields for creating the user (See https://api.mattermost.com/#tag/users/operation/CreateUser).
+
+        Returns:
+            dict: User.
+
+        Raises:
+            ApiException: Passed on from lower layers.
+        """
+        return self._post("/v4/users", data=props, **kwargs)
 
 
 
