@@ -65,8 +65,8 @@ class MMws:
             logger.info(json.loads(await websocket.recv()))
             logger.info("websocket client connected. looping...")
 
-            while self.loop:
-                try:
+            try:
+                while self.loop:
                     data = json.loads(await websocket.recv())
                     if "event" not in data:
                         continue
@@ -75,5 +75,5 @@ class MMws:
                         self.ws_handler(self, data)
                     except:
                         logger.error("".join(traceback.format_exc()))
-                except websockets.exceptions.ConnectionClosedError as e:
-                    self._websocket_run()
+            except websockets.exceptions.ConnectionClosedError as e:
+                self._websocket_run()
