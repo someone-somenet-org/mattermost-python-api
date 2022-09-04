@@ -60,17 +60,20 @@ class MMws:
 
     async def _websocket_run(self):
         logger.info("Starting websocket client.")
-        async with websockets.connect(self.ws_url, ping_interval=None, extra_headers={"Authorization": "Bearer "+self.api._bearer}) as websocket:
+        async with websockets.connect(self.ws_url, ping_interval=10, extra_headers={"Authorization": "Bearer "+self.api._bearer}) as websocket:
             #await websocket.send(json.dumps({"seq": 1, "action":"authentication_challenge", "data":{"token":self.api._bearer}}))
             logger.info(json.loads(await websocket.recv()))
             logger.info("websocket client connected. looping...")
 
             while self.loop:
-                data = json.loads(await websocket.recv())
-                if "event" not in data:
-                    continue
-
                 try:
-                    self.ws_handler(self, data)
-                except:
-                    logger.error("".join(traceback.format_exc()))
+                    data = json.loads(await websocket.recv())
+                    if "event" not in data:
+                        continue
+
+                    try:
+                        self.ws_handler(self, data)
+                    except:
+                        logger.error("".join(traceback.format_exc()))
+                except websockets.exceptions.ConnectionClosedError as e:
+                    self._websocket_run()
