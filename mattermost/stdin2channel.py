@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Someone's Mattermost API v4 bindings.
-  Copyright (c) 2016-2021 by Someone <someone@somenet.org> (aka. Jan Vales <jan@jvales.net>)
+  Copyright (c) 2016-2023 by Someone <someone@somenet.org> (aka. Jan Vales <jan@jvales.net>)
   published under MIT-License
 
 post stdin to a channel.

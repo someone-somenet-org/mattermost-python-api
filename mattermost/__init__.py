@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Someone's Mattermost API v4 bindings.
-  Copyright (c) 2016-2021 by Someone <someone@somenet.org> (aka. Jan Vales <jan@jvales.net>)
+  Copyright (c) 2016-2023 by Someone <someone@somenet.org> (aka. Jan Vales <jan@jvales.net>)
   published under MIT-License
 """
 
@@ -1495,7 +1495,102 @@ class MMApi:
 #+ **LDAP** #NOT_IMPLEMENTED
 
 ################################################
-#+ **GROUPS** #NOT_IMPLEMENTED
+    def get_groups(self, **kwargs):
+        """
+        Generator: iterates over all groups.
+
+        Returns:
+            generates: One Group at a time.
+
+        Raises:
+            ApiException: Passed on from lower layers.
+        """
+        page = 0
+        while True:
+            data_page = self._get("/v4/groups", params={
+                "page":str(page),
+                "per_page":"200",
+            }, **kwargs)
+
+            if data_page == []:
+                break
+            page += 1
+
+            for data in data_page:
+                yield data
+
+
+
+    def get_users_for_group(self, group_id, **kwargs):
+        """
+        Generator: Get a page of users in a group.
+
+        Args:
+            group_id (string): The group ID to iterate over.
+
+        Returns:
+            generates: Users.
+
+        Raises:
+            ApiException: Passed on from lower layers.
+        """
+        page = 0
+        while True:
+            data_page = self._get("/v4/groups/"+group_id+"/members", params={"page":str(page)}, **kwargs)
+
+            if data_page['members'] == []:
+                break
+            page += 1
+
+            for member in data_page['members']:
+                yield member
+
+
+
+    def add_user_to_group(self, group_id, user_ids, **kwargs):
+        """
+        Generator: Get a page of users in a group. Use the query parameters to modify the behaviour of this endpoint.
+
+        Args:
+            group_id (string): The group ID to add user_id to.
+            user_ids (string/list): The user ID(s) to add group.
+
+        Returns:
+            generates: Post.
+
+        Raises:
+            ApiException: Passed on from lower layers.
+        """
+        if not isinstance(user_ids, list):
+            user_ids = [user_ids]
+
+        return self._post("/v4/groups/"+group_id+"/members", data={"user_ids":user_ids}, **kwargs)
+
+
+
+    def remove_user_from_group(self, group_id, user_ids=None, **kwargs):
+        """
+        Generator: Get a page of users in a group. Use the query parameters to modify the behaviour of this endpoint.
+
+        Args:
+            group_id (string): The group ID to remove the user_id from.
+            user_id (string/list): The user ID(s) to remove from group or None for all.
+
+        Returns:
+            generates: Post.
+
+        Raises:
+            ApiException: Passed on from lower layers.
+        """
+        if user_ids is None:
+            user_ids = [x['id'] for x in self.get_users_for_group(group_id)]
+
+        elif not isinstance(user_ids, list):
+            user_ids = [user_ids]
+
+        return self._delete("/v4/groups/"+group_id+"/members", data={"user_ids":user_ids}, **kwargs)
+
+
 
 ################################################
 #+ **COMPLIANCE** #NOT_IMPLEMENTED
