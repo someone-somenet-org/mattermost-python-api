@@ -566,7 +566,21 @@ class MMApi:
     #def patch_team() #NOT_IMPLEMENTED
     #def update_team_privacy() #NOT_IMPLEMENTED
     #def restore_team() #NOT_IMPLEMENTED
-    #def get_team_by_name() #NOT_IMPLEMENTED
+    def get_team_by_name(self, team_name, **kwargs):
+        """
+        Get a team on the system.
+
+        Args:
+            team_name (string): team_name.
+
+        Returns:
+            dict: Team.
+
+        Raises:
+            ApiException: Passed on from lower layers.
+        """
+
+        return self._get("/v4/teams/name/" + team_name, **kwargs)
     #def search_teams() #NOT_IMPLEMENTED
     #def exists_team() #NOT_IMPLEMENTED
     #def get_teams_for_user() #NOT_IMPLEMENTED
