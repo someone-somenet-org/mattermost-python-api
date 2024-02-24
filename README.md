@@ -9,13 +9,6 @@ In productive use on a 6k+ users E10 instance at https://mattermost.fsinf.at
     + Others may be out of scope (I cannot test E20-stuff)
 + Beware: I love to rebase git. :)
 
-## If you use this or find this stuff useful, consider paying me a beer/club-mate :)
-+ ``btc: bc1q9vxqzd58683ky9c2yaddaxx3wrxakggfa0dmdt``
-+ ``eth: 0x839326860d74cf61f03719c5c63db3ae5d2b443f``
-+ ``bch: qqxpm8py3flkaqdt4ehatzvx250634fuvgsgvft6z4``
-+ ``doge: DLeQq2u7gdnidaNwEtj9fYrstUaU4banNg``
-+ ``xmr: 47WwuQssrZRHLXYBRoEPmqhyG8e4PxorwWn1Xvyg6QShKAjZ83UHWJmYd9PFkpH6vPQFgNbnKvaRz1EzoQHSeeQvEGQ6ihA``
-
 
 ## Setup
 ``pip3 install --user --upgrade mattermost``
