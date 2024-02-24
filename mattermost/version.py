@@ -1,9 +1,9 @@
-#!/usr/bin/env python3
 """
 Someone's Mattermost API v4 bindings.
-  Copyright (c) 2016-2021 by Someone <someone@somenet.org> (aka. Jan Vales <jan@jvales.net>)
+  Copyright (c) 2024 by skorm11x
+  Forked 2024 skorm11x.
   published under MIT-License
 """
 
 # Set this package's version.
-__version__ = "6.5.0"
+__version__ = "0.0.1"
