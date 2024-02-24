@@ -938,6 +938,7 @@ class MMApi:
 
 
     def get_channel_by_name(self, team_id, channel_name, include_deleted=None, **kwargs):
+        # TODO FIX# this does not find channels by display names!
         """
         Gets channel from the provided team id and channel name strings.
 
