@@ -156,7 +156,6 @@ Ordered by https://api.mattermost.com/
   + *``patch_team() #NOT_IMPLEMENTED``*
   + *``update_team_privacy() #NOT_IMPLEMENTED``*
   + *``restore_team() #NOT_IMPLEMENTED``*
-  + *``get_team_by_name() #NOT_IMPLEMENTED``*
   + *``search_teams() #NOT_IMPLEMENTED``*
   + *``exists_team() #NOT_IMPLEMENTED``*
   + *``get_teams_for_user() #NOT_IMPLEMENTED``*
