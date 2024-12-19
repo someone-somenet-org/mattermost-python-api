@@ -1,7 +1,7 @@
-#!/usr/bin/env python3
 """
 Someone's Mattermost API v4 bindings.
   Copyright (c) 2016-2021 by Someone <someone@somenet.org> (aka. Jan Vales <jan@jvales.net>)
+  Forked 2024 skorm11x.
   published under MIT-License
 """
 
@@ -204,8 +204,19 @@ class MMApi:
 ################################################
 #+ **USERS**
 
-
-    #def create_user() #NOT_IMPLEMENTED
+    #merged this: https://github.com/someone-somenet-org/mattermost-python-api/pull/2
+    # credit for @haalcala 4SEP2022
+    def create_user(self, props=None, **kwargs):
+        """
+        Create user.
+        Args:
+            props (dict, optional): fields for creating the user (See https://api.mattermost.com/#tag/users/operation/CreateUser).
+        Returns:
+            dict: User.
+        Raises:
+            ApiException: Passed on from lower layers.
+        """
+        return self._post("/v4/users", data=props, **kwargs)
 
 
 
@@ -555,7 +566,21 @@ class MMApi:
     #def patch_team() #NOT_IMPLEMENTED
     #def update_team_privacy() #NOT_IMPLEMENTED
     #def restore_team() #NOT_IMPLEMENTED
-    #def get_team_by_name() #NOT_IMPLEMENTED
+    def get_team_by_name(self, team_name, **kwargs):
+        """
+        Get a team on the system.
+
+        Args:
+            team_name (string): team_name.
+
+        Returns:
+            dict: Team.
+
+        Raises:
+            ApiException: Passed on from lower layers.
+        """
+
+        return self._get("/v4/teams/name/" + team_name, **kwargs)
     #def search_teams() #NOT_IMPLEMENTED
     #def exists_team() #NOT_IMPLEMENTED
     #def get_teams_for_user() #NOT_IMPLEMENTED
@@ -913,6 +938,7 @@ class MMApi:
 
 
     def get_channel_by_name(self, team_id, channel_name, include_deleted=None, **kwargs):
+        # TODO FIX# this does not find channels by display names!
         """
         Gets channel from the provided team id and channel name strings.
 
@@ -1071,8 +1097,9 @@ class MMApi:
 ################################################
 #+ **POSTS**
 
-
-    def create_post(self, channel_id, message, props=None, filepaths=None, root_id=None, **kwargs):
+    # merged this: https://github.com/someone-somenet-org/mattermost-python-api/pull/3/commits/e71961e62460f0f1bafa15dbf79896c4078a7c80
+    # credit 21JUL2023 @serbeh
+    def create_post(self, channel_id, message, props=None, filepaths=None, root_id=None, metadata=None, **kwargs):
         """
         Create a new post in a channel. To create the post as a comment on another post, provide root_id.
 
@@ -1082,6 +1109,7 @@ class MMApi:
             props (string, optional): see MM-API docs.
             filepaths (list, optional): Paths to upload files from and attach to post.
             root_id (string, optional): see MM-API docs.
+            metadata (dict, optional): Priority metadata. see MM-API docs.
 
         Returns:
             dict: created Post.
@@ -1098,10 +1126,10 @@ class MMApi:
             "channel_id": channel_id,
             "message": message,
             **({"props": props} if props else {"props": {"from_webhook":"true"}}),
+            **({"metadata": metadata} if metadata else {"metadata": {}}),
             "root_id":root_id,
             "file_ids": file_ids,
         }, **kwargs)
-
 
 
     def create_ephemeral_post(self, channel_id, message, user_id, **kwargs):
