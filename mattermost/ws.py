@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Someone's Mattermost API v4 bindings.
-  Copyright (c) 2016-2023 by Someone <someone@somenet.org> (aka. Jan Vales <jan@jvales.net>)
+  Copyright (c) 2016-2025 by Someone <someone@somenet.org> (aka. Jan Vales <jan@jvales.net>)
   published under MIT-License
 """
 
@@ -60,7 +60,7 @@ class MMws:
 
     async def _websocket_run(self):
         logger.info("Starting websocket client.")
-        async with websockets.connect(self.ws_url, ping_interval=None, extra_headers={"Authorization": "Bearer "+self.api._bearer}) as websocket:
+        async with websockets.connect(self.ws_url, ping_interval=None, additional_headers={"Authorization": "Bearer "+self.api._bearer}) as websocket:
             #await websocket.send(json.dumps({"seq": 1, "action":"authentication_challenge", "data":{"token":self.api._bearer}}))
             logger.info(json.loads(await websocket.recv()))
             logger.info("websocket client connected. looping...")
